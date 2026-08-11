@@ -20,17 +20,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import type { Transaction } from '@/types/transaction';
-import { validateTransaction } from '@/utils/validators';
+import {
+  type TransactionFormValues,
+  validateTransaction,
+} from '@/utils/validators';
 
 type TransactionFormProps = {
   onAddTransaction: (transaction: Transaction) => void;
-};
-
-type TransactionFormValues = {
-  description: string;
-  amount: string;
-  type: Transaction['type'] | '';
-  category: string;
 };
 
 const CATEGORY_OPTIONS = [
@@ -85,11 +81,14 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
       return;
     }
 
+    const transactionType: Transaction['type'] =
+      formValues.type === 'income' ? 'income' : 'expense';
+
     const newTransaction: Transaction = {
       id: crypto.randomUUID(),
       description: formValues.description.trim(),
       amount: Number(formValues.amount),
-      type: formValues.type as Transaction['type'],
+      type: transactionType,
       category: formValues.category.trim(),
       date: new Date().toISOString(),
     };
@@ -162,9 +161,12 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
             <div className="space-y-2">
               <Label htmlFor="type">Type</Label>
               <Select
-                value={formValues.type || undefined}
+                value={formValues.type}
                 onValueChange={(value) =>
-                  handleFieldChange('type', value as TransactionFormValues['type'])
+                  handleFieldChange(
+                    'type',
+                    value === 'income' || value === 'expense' ? value : value ?? ''
+                  )
                 }
               >
                 <SelectTrigger
@@ -190,8 +192,8 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="category">Category</Label>
               <Select
-                value={formValues.category || undefined}
-                onValueChange={(value) => handleFieldChange('category', value)}
+                value={formValues.category}
+                onValueChange={(value) => handleFieldChange('category', value ?? '')}
               >
                 <SelectTrigger
                   id="category"

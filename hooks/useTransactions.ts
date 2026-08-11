@@ -16,15 +16,19 @@ export function useTransactions(): {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const hasSkippedInitialSave = useRef(false);
 
-  useEffect(() => {
-    const loadTimer = window.setTimeout(() => {
-      setTransactions(getTransactions());
-    }, 0);
+  // useEffect(() => {
+  //   const loadTimer = window.setTimeout(() => {
+  //     setTransactions(getTransactions());
+  //   }, 0);
 
-    return () => {
-      window.clearTimeout(loadTimer);
-    };
-  }, []);
+  //   return () => {
+  //     window.clearTimeout(loadTimer);
+  //   };
+  // }, []);
+
+  useEffect(() => {
+  setTransactions(getTransactions());
+}, []);
 
   useEffect(() => {
     if (!hasSkippedInitialSave.current) {

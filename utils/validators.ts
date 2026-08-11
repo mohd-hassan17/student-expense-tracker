@@ -1,18 +1,21 @@
 import type { Transaction } from '@/types/transaction';
 
-type TransactionForm = Partial<Transaction> & {
-  amount?: number | string;
+export type TransactionFormValues = {
+  description: string;
+  amount: string;
+  type: Transaction['type'] | '';
+  category: string;
 };
 
 // This keeps transaction form checks centralized before data is saved or displayed.
-export function validateTransaction(form: TransactionForm): {
+export function validateTransaction(form: TransactionFormValues): {
   isValid: boolean;
   errors: Record<string, string>;
 } {
   const errors: Record<string, string> = {};
-  const description = form.description?.trim() ?? '';
-  const category = form.category?.trim() ?? '';
-  const amount = typeof form.amount === 'number' ? form.amount : Number(form.amount);
+  const description = form.description.trim();
+  const category = form.category.trim();
+  const amount = Number(form.amount);
 
   if (!description) {
     errors.description = 'Description is required.';
