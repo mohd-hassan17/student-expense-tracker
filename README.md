@@ -36,6 +36,7 @@ types/          → transaction.ts
 
 ```bash
 git clone https://github.com/mohd-hassan17/student-expense-tracker.git
+cd student-expense-tracker
 npm install
 npm run dev
 ```
