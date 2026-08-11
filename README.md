@@ -4,6 +4,10 @@ A clean, responsive dashboard for students to track income, expenses, and their 
 
 ![Dashboard screenshot](./public/image.png)
 
+## Live Demo
+
+[View the live app →](https://student-expense-tracker-nine-jade.vercel.app/)
+
 ## Features
 
 - **Real-time summary cards** — Total Income, Total Expenses, and Net Balance, recalculated automatically from the transaction list.
